@@ -1,0 +1,20 @@
+time:2016-wrz-13 10:47:35.205 level:DEBUG  thread:main logger:com.mycompany.serversinfo.ZabbixApiTestBase message:{
+  "result": [],
+  "id": 1574796212,
+  "jsonrpc": "2.0"
+}
+time:2016-wrz-13 10:51:35.604 level:DEBUG  thread:main logger:com.mycompany.serversinfo.ZabbixApiTestBase message:{
+  "result": [],
+  "id": 694404750,
+  "jsonrpc": "2.0"
+}
+time:2016-wrz-13 10:52:20.453 level:DEBUG  thread:main logger:com.mycompany.serversinfo.ZabbixApiTestBase message:{
+  "result": [],
+  "id": 591776054,
+  "jsonrpc": "2.0"
+}
+time:2016-wrz-13 10:58:00.646 level:DEBUG  thread:main logger:com.mycompany.serversinfo.ZabbixApiTestBase message:{
+  "result": [],
+  "id": 58485760,
+  "jsonrpc": "2.0"
+}
