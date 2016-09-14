@@ -13,10 +13,11 @@ public class ServerInfo {
     
     public static void main(String[] args) throws Exception {
         
-        GetServerInfo info = new GetServerInfo(10084);
-        GetServerInfo info2 = new GetServerInfo();
-        System.out.println(info.getPrettyString(info.servInfo()));
-        System.out.println(info.getPrettyString(info.rawServInfo()));
-        info2.getHost();
+        //GetServerInfo info = new GetServerInfo(10084);
+        //GetServerInfo info2 = new GetServerInfo();
+        GetServerInfo info3 = new GetServerInfo(10084,"http://192.168.1.145/api_jsonrpc.php","zabbix","K9GtWt2aT5uy53q9");
+        System.out.println(info3.getPrettyString(info3.servInfo()));
+        System.out.println(info3.getPrettyString(info3.rawServInfo()));
+        info3.getHost();
     }
 }

@@ -21,9 +21,9 @@ import org.json.JSONObject;
  */
 public class GetServerInfo {
     
-    private static final String ZBX_URL = "http://192.168.1.145/api_jsonrpc.php";
-    private static final String USERNAME = "zabbix";
-    private static final String PASSWORD = "K9GtWt2aT5uy53q9";
+    private String ZBX_URL = "http://192.168.1.145/api_jsonrpc.php";
+    private String USERNAME = "zabbix";
+    private String PASSWORD = "K9GtWt2aT5uy53q9";
 
     private int hostid;
     private String auth;
@@ -33,11 +33,44 @@ public class GetServerInfo {
         auth=login();
     };
     
+    /**
+     * Konstruktor klasy wymagajacy wporwadzenia ID hosta, jezeli
+     * nie znamy ID mozliwe jest uzycie konstruktora bezparametrowego,
+     * a nastepnie wywolanie funkcji getHost(), ktora zwroci liste
+     * nazw i ID wszystkich hostow.
+     * @param hostid Id hosta, ktorego dane chcemy uzyskac
+     */
     public GetServerInfo(int hostid){
        this.hostid=hostid;
        auth=login();
+    };
+    
+    /**
+     * Koncstruktor, ktory umozliwia zmiane podstawowych informacji (url, login, password)
+     * @param hostid
+     * @param ZBX_URL
+     * @param USERNAME
+     * @param PASSWORD 
+     */
+    public GetServerInfo(int hostid,String ZBX_URL, String USERNAME, String PASSWORD){
+       this.hostid=hostid;
+       this.ZBX_URL=ZBX_URL;
+       this.USERNAME=USERNAME;
+       this.PASSWORD=PASSWORD;
+       auth=login();
     }; 
-   
+    
+    public GetServerInfo(String ZBX_URL, String USERNAME, String PASSWORD){
+       this.ZBX_URL=ZBX_URL;
+       this.USERNAME=USERNAME;
+       this.PASSWORD=PASSWORD;
+       auth=login();
+    }; 
+   /**
+    * Prosta funkcja przeprowadzajaca logowanie do zabbixa i
+    * zwracajaca token.
+    * @return 
+    */
     public String login(){
         JSONObject mainJObj = new JSONObject();
         JSONObject paramJObj = new JSONObject();
@@ -60,6 +93,11 @@ public class GetServerInfo {
        return result.getString("result");
     }
     
+    /**
+     * Metoda zwracajaca wszystkie techniczne informacje na temat hosta
+     * w postaci tablicy obiektow typu JSON
+     * @return 
+     */
     private JSONArray getJson(){
         JSONObject hostJObj = new JSONObject();
         JSONObject paramJObj2 = new JSONObject();
@@ -103,6 +141,11 @@ public class GetServerInfo {
         return resultArray;
     }
     
+    /**
+     * Metoda zwracajaca obiekt typu JSON, ktory zawiera przetworzone
+     * informacje na temat zuzycia CPU, pamięci RAM oraz lacza internetowego
+     * @return 
+     */
     public JSONObject servInfo(){
         
         JSONArray resultArray=getJson();
@@ -150,6 +193,11 @@ public class GetServerInfo {
         return fin;
     }
     
+    /**
+     * Metoda zwracajaca informacje na temat zuzycia CPU, pamieci RAM, lacza
+     * w postaci nieprzetworzonej. Bez obliczania lacznych wartosci podanych danych
+     * @return 
+     */
     public JSONObject rawServInfo(){
         
         JSONArray resultArray=getJson();
@@ -179,8 +227,12 @@ public class GetServerInfo {
         return fin;
     }
     
+    /**
+     * Funkcja zwracajaca liste ID oraz nazw wszstkich hostow
+     */
     public void getHost(){
         
+        this.auth=login();
         JSONObject hostJObj = new JSONObject();
         JSONObject paramJObj2 = new JSONObject();
         JSONArray jsonArray;
@@ -209,11 +261,39 @@ public class GetServerInfo {
             System.out.println("Error creating JSON request to Zabbix API..." + je.getMessage());
         }
     }
-     
+     /**
+      * Funkcja, ktora wypisuje zawartosc JSONa w przystepnej postaci
+      * @param json
+      * @return 
+      */
     public String getPrettyString(JSONObject json){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         JsonParser jp = new JsonParser();
         JsonElement je = jp.parse(json.toString());
         return gson.toJson(je);
+    }
+    
+    public void setZBX_URL(String ZBX_URL){
+        this.ZBX_URL=ZBX_URL;
+    }
+    
+    public String getZBX_URL(){
+        return ZBX_URL;
+    }
+    
+    public void setUSERNAME(String username){
+        this.USERNAME=username;
+    }
+    
+    public String getUSERNAME(){
+        return USERNAME;
+    }
+    
+    public void setPASSWORD(String password){
+        this.PASSWORD=password;
+    }
+    
+    public String getPASSWORD(){
+        return PASSWORD;
     }
 }
